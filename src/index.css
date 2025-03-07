@@ -1,0 +1,13 @@
+@import "tailwindcss";
+
+#root {
+  min-height: 100vh;
+  background-color: #101828;
+  font-weight: bold;
+  color: #ffffff;
+  -ms-overflow-style: none;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
