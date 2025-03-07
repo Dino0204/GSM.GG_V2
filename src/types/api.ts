@@ -26,19 +26,14 @@ export async function API<Req, Res = Req>(
   options: API_OPTIONS<Req>
 ): Promise<API_RESPONSE<Res>> {
   try {
-    const res = await axios(
-      `${import.meta.env.VITE_DDRAGON_BASE_URL}${
-        import.meta.env.VITE_DDRAGON_VERSION
-      }${endpoint}`,
-      {
-        method: options.method,
-        headers: {
-          ...options.headers,
-        },
-        data: options.body,
-        signal: options.signal,
-      }
-    );
+    const res = await axios(`${endpoint}`, {
+      method: options.method,
+      headers: {
+        ...options.headers,
+      },
+      data: options.body,
+      signal: options.signal,
+    });
     return {
       success: true,
       data: res.data,
