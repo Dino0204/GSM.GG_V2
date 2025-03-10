@@ -8,6 +8,7 @@ interface User {
   profileIconId: number,
   summonerLevel: number,
   revisionDate: number,
+  puuid: string
 }
 
 interface Tier {
@@ -19,17 +20,13 @@ interface Tier {
   losses: number
 }
 
-interface Match {
-
-}
-
 export default function Profile() {
   const user_name = "푹우린공룡탕을안먹으면못나가는방";
   const tag_line = "dino";
 
   const [user, setUser] = useState<User>()
   const [tiers, setTiers] = useState<Tier[]>([])
-  const [matches, setMatches] = useState<Match[]>([])
+  const [matches, setMatches] = useState<[]>([])
 
   useEffect(() => {
     const fetchSummonerData = async () => {
@@ -45,7 +42,7 @@ export default function Profile() {
       //console.log(user_res.data)
 
       // 2. 소환사 매치 아이디 얻기
-      const match_id = await getMatchId(puuid, 0, 20)
+      const match_id = await getMatchId(puuid, 0, 5)
       setMatches(match_id.data)
       //console.log(match_id.data)
 
@@ -54,7 +51,7 @@ export default function Profile() {
       setTiers(user_tier.data)
       //console.log(user_tier.data)
 
-      setUser({ gameName, tagLine, profileIconId, summonerLevel, revisionDate })
+      setUser({ gameName, tagLine, profileIconId, summonerLevel, revisionDate, puuid })
 
     };
     fetchSummonerData();
@@ -93,14 +90,14 @@ export default function Profile() {
           ))}
         </main>
       </div>
-      {/* {matches && matches.map((match, index) => (
+      {matches && user && matches.map((match, index) => (
         <Matchcard
-          key={match}
+          key={index}
           id={match}
           index={index}
-          myPuuid={`UG7N5mRoWAITdQAHcSux5rwufHL9_-fNq43ProGZPH9cz3DOMxBgod9-ydA4I-zZePI8l4Dfkn-V5Q`}
+          myPuuid={user?.puuid}
         />
-      ))} */}
+      ))}
     </div>
   );
 }

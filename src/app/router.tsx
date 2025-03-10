@@ -11,7 +11,7 @@ export const Router = () => {
       <Header />
       <div className="p-2">
         <Routes>
-          <Route path="/main" element={<Main />} />
+          <Route path="/" element={<Main />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/champions" element={<Champions />} />
           <Route path="/champions/details/:id" element={<Details />} />

@@ -26,7 +26,7 @@ export async function API<Req, Res = Req>(
   options: API_OPTIONS<Req>
 ): Promise<API_RESPONSE<Res>> {
   try {
-    const res = await axios(`${endpoint}`, {
+    const res = await axios(endpoint, {
       method: options.method,
       headers: {
         ...options.headers,

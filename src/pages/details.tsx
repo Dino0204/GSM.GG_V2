@@ -62,7 +62,7 @@ export default function Details() {
     const fetchChampionSkins = async () => {
       if (id) {
         const res = await getChampDetails(id)
-        const skinsData = (res?.data?.data[id]?.skins || []).map((skin) => ({
+        const skinsData = (res?.data?.data[id]?.skins || []).map((skin: ChampSkin) => ({
           num: skin.num,
           name: skin.name,
           image: getChampSkin(id, skin.num),
