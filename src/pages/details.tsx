@@ -1,18 +1,15 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getChampDetails, getChampSkin } from "../apis/getChampData";
+import { ChampionSkin } from "../types/champion";
 import Champcard from "../components/champcard";
-import { ChampSkin } from "../types/champion";
 
 export default function Details() {
   const { id } = useParams()
-  const [championSkins, setChampionSkins] = useState<ChampSkin[]>([]);
+  const [championSkins, setChampionSkins] = useState<ChampionSkin[]>([]);
   const [currentImgIndex, setCurrentImgIndex] = useState(1)
 
-  const [style, setStyle] = useState<{
-    transform: string,
-    transition: string
-  }>()
+  const [style, setStyle] = useState<{ transform: string, transition: string }>()
 
   const nextSlide = () => {
     setCurrentImgIndex(currentImgIndex + 1);
@@ -62,13 +59,14 @@ export default function Details() {
     const fetchChampionSkins = async () => {
       if (id) {
         const res = await getChampDetails(id)
-        const skinsData = (res?.data?.data[id]?.skins || []).map((skin: ChampSkin) => ({
+        console.log(res)
+        const skinsData = (res?.data?.data[id]?.skins).map((skin: ChampionSkin) => ({
           num: skin.num,
           name: skin.name,
           image: getChampSkin(id, skin.num),
         }));
 
-        console.log(skinsData)
+        // console.log(skinsData)
         setChampionSkins([skinsData[skinsData.length - 1], ...skinsData, skinsData[0]]);
       }
     };

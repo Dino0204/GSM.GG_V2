@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getChampData, getChampProfile } from "../apis/getChampData";
-import { Champ } from "../types/champion";
+import { Champion } from "../types/champion";
 
 export default function Champions() {
-  const [champions, setChampions] = useState<Champ[]>([]);
+  const [champions, setChampions] = useState<Champion[]>([]);
   const { pathname } = useLocation();
   const go = useNavigate()
 
@@ -19,7 +19,7 @@ export default function Champions() {
         profile: getChampProfile(champion.id)
       }))
 
-      console.log(championsData)
+      //console.log(championsData)
       setChampions(championsData);
 
     };
@@ -29,27 +29,27 @@ export default function Champions() {
 
   return (
     <div className="flex justify-center ">
-      <ul className="flex flex-col justify-center items-start text-sm w-1/4q gap-2">
-        {champions && champions.map((champ, index) => (
+      <ul className="flex flex-col justify-center items-start text-sm w-1/4 gap-2">
+        {champions && champions.map((champion, index) => (
           <li
             className="flex items-center bg-gray-700 w-full p-1"
-            key={champ.key}
+            key={champion.key}
           >
             {/* 번호 */}
             <span className="w-8">{index + 1}</span>
             {/* 챔프 */}
             <div
               className="flex items-center gap-2 cursor-pointer"
-              onClick={() => go(`${pathname}/details/${champ.id}`)}
+              onClick={() => go(`${pathname}/details/${champion.id}`)}
             >
               <img
                 className="rounded-sm"
-                src={champ.profile}
-                alt={`${champ.id} profile`}
+                src={champion.profile}
+                alt={`${champion.id} profile`}
                 width={32}
                 height={32}
               />
-              <span>{champ.name}</span>
+              <span>{champion.name}</span>
             </div>
           </li>
         ))}

@@ -2,24 +2,7 @@ import { useEffect, useState } from "react";
 import { getAccountData, getUserDetail, getUserProfile, getUserTier } from "../apis/getUserData";
 import { getMatchId } from "../apis/getMatchData";
 import Matchcard from "../components/matchcard";
-
-interface User {
-  gameName: string,
-  tagLine: string,
-  profileIconId: number,
-  summonerLevel: number,
-  revisionDate: number,
-  puuid: string
-}
-
-interface Tier {
-  tier: string,
-  rank: string,
-  leaguePoints: number,
-  queueType: string,
-  wins: number,
-  losses: number
-}
+import { Tier, User } from "../types/user";
 
 export default function Profile() {
   const user_name = "HideOnBush";
@@ -35,22 +18,18 @@ export default function Profile() {
       // 0. 닉네임, 태그로 puuid 얻기
       const account_res = await getAccountData(user_name, tag_line)
       const { gameName, tagLine, puuid } = account_res.data;
-      //console.log(account_res.data)
 
       // 1. 소환사 상세정보 얻기
       const user_res = await getUserDetail(puuid)
       const { id, profileIconId, summonerLevel, revisionDate } = user_res.data;
-      //console.log(user_res.data)
 
       // 2. 소환사 매치 아이디 얻기
       const match_id = await getMatchId(puuid, 0, 5)
       setMatches(match_id.data)
-      //console.log(match_id.data)
 
       // 3. 소환사 티어 얻기
       const user_tier = await getUserTier(id)
       setTiers(user_tier.data)
-      //console.log(user_tier.data)
 
       setUser({ gameName, tagLine, profileIconId, summonerLevel, revisionDate, puuid })
 
@@ -60,8 +39,8 @@ export default function Profile() {
 
   return (
     <div className="flex flex-col justify-center items-center gap-2">
-      <div className="bg-white w-[750px] h-[240px] rounded-[30px] text-black flex overflow-hidden p-5 gap-4">
-        <header className="border-[5px] border-[#3A8BFE] w-[200px] h-[200px] rounded-[15px] overflow-hidden relative">
+      <div className="bg-white w-187.5 h-60 rounded-4xl text-black flex overflow-hidden p-5 gap-4">
+        <header className="border-4 border-[#3A8BFE] w-50 h-50 rounded-2xl overflow-hidden relative">
           {user?.profileIconId && <img
             alt="profile"
             className="w-full h-full absolute"
