@@ -8,7 +8,7 @@ export default function Header() {
   return (
     <header>
       <section className="flex items-center bg-gray-800 p-2">
-        <img src={logo_img} alt="logo" height={32} className="ml-2" onClick={() => go("/")} />
+        <img src={logo_img} alt="logo" height={32} className="ml-2 cursor-pointer" onClick={() => go("/")} />
       </section>
       <section className="flex items-center bg-blue-500 p-2 justify-between text-sm ">
         <ul className="flex gap-4 ">
