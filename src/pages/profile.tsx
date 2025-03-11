@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { getAccountData, getMatchId, getUserDetail, getUserTier } from "../apis/getUserData";
+import { getAccountData, getUserDetail, getUserProfile, getUserTier } from "../apis/getUserData";
+import { getMatchId } from "../apis/getMatchData";
 import Matchcard from "../components/matchcard";
 
 interface User {
@@ -21,8 +22,8 @@ interface Tier {
 }
 
 export default function Profile() {
-  const user_name = "푹우린공룡탕을안먹으면못나가는방";
-  const tag_line = "dino";
+  const user_name = "HideOnBush";
+  const tag_line = "KR1";
 
   const [user, setUser] = useState<User>()
   const [tiers, setTiers] = useState<Tier[]>([])
@@ -59,14 +60,13 @@ export default function Profile() {
 
   return (
     <div className="flex flex-col justify-center items-center gap-2">
-
       <div className="bg-white w-[750px] h-[240px] rounded-[30px] text-black flex overflow-hidden p-5 gap-4">
         <header className="border-[5px] border-[#3A8BFE] w-[200px] h-[200px] rounded-[15px] overflow-hidden relative">
-          <img
+          {user?.profileIconId && <img
             alt="profile"
             className="w-full h-full absolute"
-            src={`https://ddragon.leagueoflegends.com/cdn/15.3.1/img/profileicon/${user?.profileIconId}.png`}
-          />
+            src={getUserProfile(user?.profileIconId)}
+          />}
           <p className="absolute bottom-1 left-1/2 -translate-x-1/2 text-white bg-slate-950 px-2 rounded-xl">
             {user?.summonerLevel}
           </p>
