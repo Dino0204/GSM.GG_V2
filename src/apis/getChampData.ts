@@ -1,6 +1,7 @@
 import { API } from "../types/api";
 import { ChampionsResponse } from "../types/champion";
 
+/** 모든 챔피언 정보 획득 */
 export const getChampData = async () => {
   const res = await API<any, ChampionsResponse>(
     `${import.meta.env.VITE_DDRAGON_URL}/${
@@ -13,6 +14,7 @@ export const getChampData = async () => {
   return res;
 };
 
+/** 챔피언 상세 정보 취득 */
 export const getChampDetails = async (champ_id: string) => {
   const res = await API<any, any>(
     `${import.meta.env.VITE_DDRAGON_URL}/${
@@ -25,12 +27,14 @@ export const getChampDetails = async (champ_id: string) => {
   return res;
 };
 
+/** 챔피언 프로필 이미지 취득 */
 export const getChampProfile = (champ_id: string) => {
   return `${import.meta.env.VITE_DDRAGON_URL}/${
     import.meta.env.VITE_DDRAGON_VER
   }/img/champion/${champ_id}.png`;
 };
 
+/** 챔피언 로딩 이미지(스킨) 취득 */
 export const getChampSkin = (champ_id: string, champ_num: number) => {
   return `${
     import.meta.env.VITE_DDRAGON_URL
