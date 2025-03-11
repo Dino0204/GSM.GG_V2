@@ -15,4 +15,8 @@ export interface Participant {
   deaths: number;
   assists: number;
   puuid: string;
+  myPriRune: { icon: string };
+  mySubRune: { icon: string };
+  mySpell1: any;
+  mySpell2: any;
 }
