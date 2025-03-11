@@ -18,7 +18,7 @@ export const getMatchId = async (
 
 /** 매치 상세 정보 취득 */
 export const getMatchData = async (id: string) => {
-  const res = await API<any, any>(
+  const res = await API<any>(
     `${ASIA}/lol/match/v5/matches/${id}?api_key=${RIOT_API}`,
     {
       method: "GET",
@@ -27,6 +27,6 @@ export const getMatchData = async (id: string) => {
   return res;
 };
 
-export const getItem = (id: number) => {
+export const getItem = (id: number): string => {
   return `${DDRAGON}/${VERSION}/img/item/${id}.png`;
 };

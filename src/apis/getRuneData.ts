@@ -11,6 +11,6 @@ export const getRuneData = async () => {
   return res;
 };
 
-export const getRuneImg = (icon: string) => {
+export const getRuneImg = (icon: string): string => {
   return `${DDRAGON}/img/${icon}`;
 };

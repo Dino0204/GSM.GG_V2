@@ -8,6 +8,6 @@ export const getSpellData = async () => {
   return res;
 };
 
-export const getSpellImg: any = (name: string) => {
+export const getSpellImg = (name: string): string => {
   return `${DDRAGON}/${VERSION}/img/spell/${name}.png`;
 };

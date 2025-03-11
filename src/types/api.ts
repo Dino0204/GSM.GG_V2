@@ -21,7 +21,7 @@ interface API_ERROR {
   status: number;
 }
 
-export async function API<Req, Res = Req>(
+export async function API<Res, Req = {}>(
   endpoint: string,
   options: API_OPTIONS<Req>
 ): Promise<API_RESPONSE<Res>> {
