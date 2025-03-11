@@ -1,12 +1,10 @@
 import { API } from "../types/api";
+import { ASIA, KR, RIOT_API } from "./env_valuable";
 
+/** 계정 정보 취득 */
 export const getAccountData = async (game_name: string, tag_line: string) => {
   const res = await API<any>(
-    `${
-      import.meta.env.VITE_RIOT_ASIA_URL
-    }/riot/account/v1/accounts/by-riot-id/${game_name}/${tag_line}?api_key=${
-      import.meta.env.VITE_RIOT_API
-    }`,
+    `${ASIA}/riot/account/v1/accounts/by-riot-id/${game_name}/${tag_line}?api_key=${RIOT_API}`,
     {
       method: "GET",
     }
@@ -14,13 +12,10 @@ export const getAccountData = async (game_name: string, tag_line: string) => {
   return res;
 };
 
+/** 계정 상세 정보 취득 */
 export const getUserDetail = async (puuid: string) => {
   const res = await API<any>(
-    `${
-      import.meta.env.VITE_RIOT_KR_URL
-    }/lol/summoner/v4/summoners/by-puuid/${puuid}?api_key=${
-      import.meta.env.VITE_RIOT_API
-    }`,
+    `${KR}/lol/summoner/v4/summoners/by-puuid/${puuid}?api_key=${RIOT_API}`,
     {
       method: "GET",
     }
@@ -28,34 +23,18 @@ export const getUserDetail = async (puuid: string) => {
   return res;
 };
 
-export const getMatchId = async (
-  puuid: string,
-  start: number,
-  count: number
-) => {
-  const res = await API<any>(
-    `${
-      import.meta.env.VITE_RIOT_ASIA_URL
-    }/lol/match/v5/matches/by-puuid/${puuid}/ids?start=${start}&count=${count}&api_key=${
-      import.meta.env.VITE_RIOT_API
-    }`,
-    {
-      method: "GET",
-    }
-  );
-  return res;
-};
-
+/** 계정 티어 취득 */
 export const getUserTier = async (id: string) => {
   const res = await API<any>(
-    `${
-      import.meta.env.VITE_RIOT_KR_URL
-    }/lol/league/v4/entries/by-summoner/${id}?api_key=${
-      import.meta.env.VITE_RIOT_API
-    }`,
+    `${KR}/lol/league/v4/entries/by-summoner/${id}?api_key=${RIOT_API}`,
     {
       method: "GET",
     }
   );
   return res;
+};
+
+/** 계정 프로필 이미지 취득 */
+export const getUserProfile = (id: number) => {
+  return `https://ddragon.leagueoflegends.com/cdn/15.3.1/img/profileicon/${id}.png`;
 };
