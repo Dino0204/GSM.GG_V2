@@ -5,35 +5,35 @@ import Matchcard from "../components/matchcard";
 import { Tier, User } from "../types/user";
 
 export default function Profile() {
-  const user_name = "HideOnBush";
-  const tag_line = "KR1";
+  const [user_name, setUserName] = useState("HideOnBush");
+  const [tag_line, setTagLine] = useState("KR1");
 
   const [user, setUser] = useState<User>()
   const [tiers, setTiers] = useState<Tier[]>([])
   const [matches, setMatches] = useState<[]>([])
 
+  const fetchSummonerData = async () => {
+
+    // 0. 닉네임, 태그로 puuid 얻기
+    const account_res = await getAccountData(user_name, tag_line)
+    const { gameName, tagLine, puuid } = account_res?.data;
+
+    // 1. 소환사 상세정보 얻기
+    const user_res = await getUserDetail(puuid)
+    const { id, profileIconId, summonerLevel, revisionDate } = user_res.data;
+
+    // 2. 소환사 매치 아이디 얻기
+    const match_id = await getMatchId(puuid, 0, 20)
+    setMatches(match_id.data)
+
+    // 3. 소환사 티어 얻기
+    const user_tier = await getUserTier(id)
+    setTiers(user_tier.data)
+
+    setUser({ gameName, tagLine, profileIconId, summonerLevel, revisionDate, puuid })
+
+  };
   useEffect(() => {
-    const fetchSummonerData = async () => {
-
-      // 0. 닉네임, 태그로 puuid 얻기
-      const account_res = await getAccountData(user_name, tag_line)
-      const { gameName, tagLine, puuid } = account_res.data;
-
-      // 1. 소환사 상세정보 얻기
-      const user_res = await getUserDetail(puuid)
-      const { id, profileIconId, summonerLevel, revisionDate } = user_res.data;
-
-      // 2. 소환사 매치 아이디 얻기
-      const match_id = await getMatchId(puuid, 0, 5)
-      setMatches(match_id.data)
-
-      // 3. 소환사 티어 얻기
-      const user_tier = await getUserTier(id)
-      setTiers(user_tier.data)
-
-      setUser({ gameName, tagLine, profileIconId, summonerLevel, revisionDate, puuid })
-
-    };
     fetchSummonerData();
   }, []);
 
@@ -54,6 +54,9 @@ export default function Profile() {
           <header className="flex gap-2">
             <h1 className="text-2xl font-bold">{user?.gameName}</h1>
             <h2 className="text-2xl font-semibold text-gray-400">{"#"}{user?.tagLine}</h2>
+            <input type="text" className="bg-blue-300" onChange={(e) => setUserName(e.target.value)} />
+            <input type="text" className="bg-blue-300" onChange={(e) => setTagLine(e.target.value)} />
+            <button className="bg-blue-500 p-2 rounded-sm" onClick={() => fetchSummonerData()}>검색 하기</button>
           </header>
           {tiers && tiers.map((tier, index) => (
             <footer className="flex items-center gap-2" key={index}>
@@ -63,8 +66,8 @@ export default function Profile() {
               <p className="font-extrabold text-lg">
                 {tier.tier} {tier.rank} - {tier.leaguePoints}LP
               </p>
-              <p>{tier.queueType}</p>
-              <p>{tier.wins}{"/"}{tier.losses}</p>
+              <p>{tier.queueType == "RANKED_SOLO_5x5" ? "솔로랭크" : "자유랭크"}</p>
+              <p>{"승: "}{tier.wins} {"패: "}{tier.losses}</p>
             </footer>
           ))}
         </main>
